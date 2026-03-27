@@ -1,0 +1,50 @@
+experiment:
+  name: "sst2_lora_pilot"
+  output_dir: "results"
+  seed: 42
+
+model:
+  backbone: "distilbert-base-uncased"
+  num_labels: 2
+
+task:
+  name: "text_classification"
+  dataset: "sst2"
+  max_length: 128
+
+training:
+  num_train_epochs: 3
+  learning_rate: 2e-4
+  batch_size: 16
+  weight_decay: 0.01
+  warmup_ratio: 0.06
+  evaluation_strategy: "epoch"
+  save_strategy: "epoch"
+  logging_steps: 20
+
+peft:
+  method: "lora"
+  target_trainable_budget: "small"
+
+lora:
+  r: 8
+  alpha: 16
+  dropout: 0.1
+
+adapter:
+  bottleneck_size: 64
+
+prefix_tuning:
+  num_virtual_tokens: 20
+
+prompt_tuning:
+  num_virtual_tokens: 20
+
+metrics:
+  - accuracy
+  - f1
+  - train_loss
+  - val_loss
+  - trainable_params
+  - train_time
+  - peak_memory
