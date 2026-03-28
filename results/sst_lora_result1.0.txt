@@ -1,0 +1,9 @@
+Experiment: sst2_lora_pilot
+Backbone: distilbert-base-uncased
+Method: LoRA
+Seed: 42
+Trainable params: 739586
+Accuracy: 0.8991
+F1: 0.9024
+Runtime: 1087s
+Notes: First successful end-to-end run on local machine.

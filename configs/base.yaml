@@ -10,6 +10,8 @@ model:
 task:
   name: "text_classification"
   dataset: "sst2"
+  text_key: "sentence"
+  label_key: "label"
   max_length: 128
 
 training:
@@ -26,25 +28,28 @@ peft:
   method: "lora"
   target_trainable_budget: "small"
 
-lora:
-  r: 8
-  alpha: 16
-  dropout: 0.1
+  lora:
+    r: 8
+    alpha: 16
+    dropout: 0.1
+    target_modules:
+      - "q_lin"
+      - "v_lin"
 
-adapter:
-  bottleneck_size: 64
+  adapter:
+    bottleneck_size: 64
 
-prefix_tuning:
-  num_virtual_tokens: 20
+  prefix_tuning:
+    num_virtual_tokens: 20
 
-prompt_tuning:
-  num_virtual_tokens: 20
+  prompt_tuning:
+    num_virtual_tokens: 20
 
 metrics:
-  - accuracy
-  - f1
-  - train_loss
-  - val_loss
-  - trainable_params
-  - train_time
-  - peak_memory
+  - "accuracy"
+  - "f1"
+  - "train_loss"
+  - "val_loss"
+  - "trainable_params"
+  - "train_time"
+  - "peak_memory"

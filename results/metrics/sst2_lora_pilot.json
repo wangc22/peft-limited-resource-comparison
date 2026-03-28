@@ -1,0 +1,21 @@
+{
+  "experiment_name": "sst2_lora_pilot",
+  "method": "lora",
+  "dataset": "sst2",
+  "seed": 42,
+  "trainable_params": 739586,
+  "total_params": 67694596,
+  "trainable_ratio_percent": 1.0925332946813067,
+  "train_runtime_seconds": 1087.0358929634094,
+  "peak_memory_bytes": 0,
+  "train_loss": 0.23964871587209632,
+  "eval_metrics": {
+    "eval_loss": 0.34180015325546265,
+    "eval_accuracy": 0.8990825688073395,
+    "eval_f1": 0.9024390243902439,
+    "eval_runtime": 3.0499,
+    "eval_samples_per_second": 285.91,
+    "eval_steps_per_second": 18.033,
+    "epoch": 3.0
+  }
+}
