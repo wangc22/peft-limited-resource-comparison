@@ -50,7 +50,7 @@ def run_experiment(config_path: str):
         num_labels=config["model"]["num_labels"]
     )
 
-    model = apply_peft_method(model, config)
+    model = apply_peft_method(model, config, tokenizer=tokenizer)
 
     param_stats = count_trainable_parameters(model)
     print("Parameter stats:", param_stats)
@@ -75,14 +75,14 @@ def run_experiment(config_path: str):
     )
 
     trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=tokenized["train"],
-        eval_dataset=tokenized["validation"],
-        tokenizer=tokenizer,
-        data_collator=data_collator,
-        compute_metrics=compute_metrics,
-    )
+    model=model,
+    args=training_args,
+    train_dataset=tokenized["train"],
+    eval_dataset=tokenized["validation"],
+    processing_class=tokenizer,
+    data_collator=data_collator,
+    compute_metrics=compute_metrics,
+)
 
     skip_training = config.get("baseline", {}).get("skip_training", False)
 
