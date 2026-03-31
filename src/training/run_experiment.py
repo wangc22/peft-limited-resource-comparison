@@ -79,10 +79,9 @@ def run_experiment(config_path: str):
     args=training_args,
     train_dataset=tokenized["train"],
     eval_dataset=tokenized["validation"],
-    processing_class=tokenizer,
     data_collator=data_collator,
     compute_metrics=compute_metrics,
-)
+)   #create the trainer
 
     skip_training = config.get("baseline", {}).get("skip_training", False)
 

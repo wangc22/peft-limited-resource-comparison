@@ -1,5 +1,5 @@
 experiment:
-  name: "sst2_lora_pilot"
+  name: "sst2Classification"
   output_dir: "results"
   seed: 42
 
