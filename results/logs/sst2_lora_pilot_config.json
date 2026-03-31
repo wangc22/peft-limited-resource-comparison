@@ -55,5 +55,8 @@
     "trainable_params",
     "train_time",
     "peak_memory"
-  ]
+  ],
+  "baseline": {
+    "skip_training": true
+  }
 }

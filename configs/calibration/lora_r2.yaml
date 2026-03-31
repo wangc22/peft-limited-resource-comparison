@@ -1,5 +1,5 @@
 experiment:
-  name: "sst2_lora_pilot"
+  name: "calib_lora_r2"
   output_dir: "results"
   seed: 42
 
@@ -26,24 +26,15 @@ training:
 
 peft:
   method: "lora"
-  target_trainable_budget: "small"
+  target_trainable_budget: "calibration"
 
   lora:
-    r: 8
+    r: 2
     alpha: 16
     dropout: 0.1
     target_modules:
       - "q_lin"
       - "v_lin"
-
-  adapter:
-    bottleneck_size: 64
-
-  prefix_tuning:
-    num_virtual_tokens: 20
-
-  prompt_tuning:
-    num_virtual_tokens: 20
 
 metrics:
   - "accuracy"
@@ -53,6 +44,3 @@ metrics:
   - "trainable_params"
   - "train_time"
   - "peak_memory"
-
-baseline:
-  skip_training: true

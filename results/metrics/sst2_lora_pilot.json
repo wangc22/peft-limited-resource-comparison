@@ -6,16 +6,16 @@
   "trainable_params": 739586,
   "total_params": 67694596,
   "trainable_ratio_percent": 1.0925332946813067,
-  "train_runtime_seconds": 1087.0358929634094,
+  "train_runtime_seconds": 0.0,
   "peak_memory_bytes": 0,
-  "train_loss": 0.23964871587209632,
+  "train_loss": null,
   "eval_metrics": {
-    "eval_loss": 0.34180015325546265,
-    "eval_accuracy": 0.8990825688073395,
-    "eval_f1": 0.9024390243902439,
-    "eval_runtime": 3.0499,
-    "eval_samples_per_second": 285.91,
-    "eval_steps_per_second": 18.033,
-    "epoch": 3.0
+    "eval_loss": 0.6972277164459229,
+    "eval_model_preparation_time": 0.0014,
+    "eval_accuracy": 0.43463302752293576,
+    "eval_f1": 0.15726495726495726,
+    "eval_runtime": 3.4046,
+    "eval_samples_per_second": 256.125,
+    "eval_steps_per_second": 16.155
   }
 }

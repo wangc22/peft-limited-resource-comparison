@@ -84,13 +84,19 @@ def run_experiment(config_path: str):
         compute_metrics=compute_metrics,
     )
 
-    start_time = time.time()
-    peak_memory_before = torch.cuda.max_memory_allocated() if torch.cuda.is_available() else 0
+    skip_training = config.get("baseline", {}).get("skip_training", False)
 
-    train_result = trainer.train()
-
-    peak_memory_after = torch.cuda.max_memory_allocated() if torch.cuda.is_available() else 0
-    total_train_time = time.time() - start_time
+    if skip_training:
+        peak_memory_before = 0
+        peak_memory_after = 0
+        total_train_time = 0.0
+        train_result = type("obj", (), {"training_loss": None})()
+    else:
+        start_time = time.time()
+        peak_memory_before = torch.cuda.max_memory_allocated() if torch.cuda.is_available() else 0
+        train_result = trainer.train()
+        peak_memory_after = torch.cuda.max_memory_allocated() if torch.cuda.is_available() else 0
+        total_train_time = time.time() - start_time
 
     eval_metrics = trainer.evaluate(tokenized["validation"])
 

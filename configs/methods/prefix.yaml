@@ -1,5 +1,5 @@
 experiment:
-  name: "sst2_lora_pilot"
+  name: "sst2_prefix"
   output_dir: "results"
   seed: 42
 
@@ -25,8 +25,7 @@ training:
   logging_steps: 20
 
 peft:
-  method: "lora"
-  target_trainable_budget: "small"
+  method: "prefix"
 
   lora:
     r: 8
@@ -36,23 +35,9 @@ peft:
       - "q_lin"
       - "v_lin"
 
-  adapter:
-    bottleneck_size: 64
-
-  prefix_tuning:
+  prefix:
     num_virtual_tokens: 20
 
-  prompt_tuning:
+  ptuning:
     num_virtual_tokens: 20
-
-metrics:
-  - "accuracy"
-  - "f1"
-  - "train_loss"
-  - "val_loss"
-  - "trainable_params"
-  - "train_time"
-  - "peak_memory"
-
-baseline:
-  skip_training: true
+    encoder_hidden_size: 128

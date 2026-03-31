@@ -1,8 +1,24 @@
-from peft import LoraConfig, TaskType, get_peft_model
+from peft import (
+    LoraConfig,
+    PrefixTuningConfig,
+    PromptEncoderConfig,
+    TaskType,
+    get_peft_model,
+)
 
 
 def apply_peft_method(model, config: dict):
     method = config["peft"]["method"].lower()
+
+    if method == "none":
+        #return the model without any PEFT method
+        return model
+
+    if method == "full":
+        #train all parameters
+        for param in model.parameters():
+            param.requires_grad = True
+        return model
 
     if method == "lora":
         lora_cfg = config["peft"]["lora"]
@@ -13,12 +29,26 @@ def apply_peft_method(model, config: dict):
             lora_dropout=lora_cfg["dropout"],
             target_modules=lora_cfg["target_modules"],
         )
-        model = get_peft_model(model, peft_config)
-        return model
+        return get_peft_model(model, peft_config)
 
-    raise NotImplementedError(
-        f"PEFT method '{method}' is not implemented yet. Start with 'lora'."
-    )
+    if method == "prefix":
+        prefix_cfg = config["peft"]["prefix"]
+        peft_config = PrefixTuningConfig(
+            task_type=TaskType.SEQ_CLS,
+            num_virtual_tokens=prefix_cfg["num_virtual_tokens"],
+        )
+        return get_peft_model(model, peft_config)
+
+    if method == "ptuning":
+        ptuning_cfg = config["peft"]["ptuning"]
+        peft_config = PromptEncoderConfig(
+            task_type=TaskType.SEQ_CLS,
+            num_virtual_tokens=ptuning_cfg["num_virtual_tokens"],
+            encoder_hidden_size=ptuning_cfg["encoder_hidden_size"],
+        )
+        return get_peft_model(model, peft_config)
+
+    raise NotImplementedError(f"PEFT method '{method}' is not implemented yet.")
 
 
 def count_trainable_parameters(model):
